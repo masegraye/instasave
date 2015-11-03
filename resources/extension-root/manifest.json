@@ -1,0 +1,22 @@
+{
+  "manifest_version": 2,
+  "name": "Instasave",
+  "version": "1.0.0.0",
+  "description": "Instantly save Instagram photos",
+  "permissions": [
+    "notifications",
+    "downloads",
+    "background",
+    "tabs",
+    "storage",
+    "unlimitedStorage",
+    "http://*/",
+    "https://*/"
+  ],
+
+  "background": {
+    "page": "background.html"
+  },
+
+  "homepage_url": "http://www.example.com"
+}

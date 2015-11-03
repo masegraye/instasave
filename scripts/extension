@@ -1,0 +1,7 @@
+#!/bin/sh
+set -x #echo on
+rlwrap lein cljsbuild once
+rm -rf target/extension-final/
+mkdir -p target/extension-final/
+rsync -av resources/extension-root/ target/extension-final/
+rsync -av target/extension-js/ target/extension-final/
