@@ -4,14 +4,10 @@
   "version": "1.0.0.0",
   "description": "Instantly save Instagram photos",
   "permissions": [
-    "notifications",
     "downloads",
     "background",
     "tabs",
-    "storage",
-    "unlimitedStorage",
-    "http://*/",
-    "https://*/"
+    "https://instagram.com/*"
   ],
 
   "background": {
