@@ -15,7 +15,8 @@
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/clojurescript "1.7.162" :classifier "aot"
                   :exclusion [org.clojure/data.json]]
-                 [org.clojure/data.json "0.2.6" :classifier "aot"]]
+                 [org.clojure/data.json "0.2.6" :classifier "aot"]
+                 [org.clojure/core.async "0.2.371"]]
 
   :cljsbuild {:builds [{:source-paths ["src"
                                        ;; we keep these in separate source directories because contain
@@ -28,11 +29,12 @@
                                     :asset-path "js/gen"
                                     :source-map true
                                     :optimizations :simple
-                                    :modules {:core {:output-to "target/extension-js/gen/core.js"
+                                    ;; Surprisingly slow...
+                                    :modules {:core {:output-to "target/extension-js/js/gen/core.js"
                                                      :entries #{"instasave.core"}}
                                               :background {:output-to "target/extension-js/js/gen/background.js"
                                                            :entries #{"instasave.background.main"}
                                                            :depends-on #{:core}}
-                                              :gram-bomb {:ouput-to "target/extension-js/js/gen/gram_bomb.js"
+                                              :gram-bomb {:output-to "target/extension-js/js/gen/gram_bomb.js"
                                                           :entries #{"instasave.gram-bomb.main"}
                                                           :depends-on #{:core}}}}}]})
