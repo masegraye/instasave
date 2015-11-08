@@ -18,23 +18,33 @@
                  [org.clojure/data.json "0.2.6" :classifier "aot"]
                  [org.clojure/core.async "0.2.371"]]
 
-  :cljsbuild {:builds [{:source-paths ["src"
-                                       ;; we keep these in separate source directories because contain
-                                       ;; the inline invocations to their respective [module]/run methods,
-                                       ;; which cljs.test doesn't like. Putting the in separate directories from
-                                       ;; src allows us to skip their inclusion when building the CLJS test binary
-                                       "src-background-main"
-                                       "src-gram-bomb-main"]
-                         :compiler {:output-dir "target/extension-js/js/gen"
-                                    :asset-path "js/gen"
-                                    :source-map true
-                                    :optimizations :simple
-                                    ;; Surprisingly slow...
-                                    :modules {:core {:output-to "target/extension-js/js/gen/core.js"
-                                                     :entries #{"instasave.core"}}
-                                              :background {:output-to "target/extension-js/js/gen/background.js"
-                                                           :entries #{"instasave.background.main"}
-                                                           :depends-on #{:core}}
-                                              :gram-bomb {:output-to "target/extension-js/js/gen/gram_bomb.js"
-                                                          :entries #{"instasave.gram-bomb.main"}
-                                                          :depends-on #{:core}}}}}]})
+  ;; Going to experiment with multiple builds instead of module builds - might be faster...
+  ;; and this will certainly be faster for background.cljs development - because we can use figwheel
+  :cljsbuild {:builds #_{:background {:source-paths ["src" "src-background-main"]
+                                    :compiler {:output-dir "target/extension-js/js/gen/background"
+                                               :output-to "target/extension-js/js/gen/background/background.js"
+                                               :source-map "target/extension-js/js/gen/background/background.js.map"
+                                               :optimizations :whitespace
+                                               :main "instasave.background.main"
+                                               :asset-path "js/gen/background"}}
+
+                       :gram-bomb {:source-paths ["src" "src-gram-bomb-main"]
+                                   :compiler {:output-dir "target/extension-js/js/gen/gram_bomb"
+                                              :output-to "target/extension-js/js/gen/gram_bomb/gram_bomb.js"
+                                              :optimizations :simple}}}
+              [{:source-paths ["src"
+                               ;; we keep these in separate source directories because contain
+                               ;; the inline invocations to their respective [module]/run methods,
+                               ;; which cljs.test doesn't like. Putting the in separate directories from
+                               ;; src allows us to skip their inclusion when building the CLJS test binary
+                               "src-background-main"
+                               "src-gram-bomb-main"]
+                :compiler {:output-dir "target/extension-js/js/gen"
+                           :asset-path "js/gen"
+                           :source-map true
+                           :optimizations :simple
+                           ;; Surprisingly slow...
+                           :modules {:background {:output-to "target/extension-js/js/gen/background.js"
+                                                  :entries #{"instasave.background.main"}}
+                                     :gram-bomb {:output-to "target/extension-js/js/gen/gram_bomb.js"
+                                                 :entries #{"instasave.gram-bomb.main"}}}}}]})
