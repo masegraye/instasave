@@ -11,3 +11,4 @@ pom.xml
 target/
 build/
 .DS_Store
+node_modules/
