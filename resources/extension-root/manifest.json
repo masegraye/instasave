@@ -14,7 +14,11 @@
     "page": "background.html"
   },
 
-  "homepage_url": "http://www.example.com",
+  "page_action": {
+    "default_title": "Instasave this image",
+    "default_icon": "icon-19.png"
+  },
 
-  "content_security_policy": "script-src 'self' blob: filesystem: chrome-extension-resource: unsafe_inline"
+
+  "homepage_url": "http://www.example.com"
 }

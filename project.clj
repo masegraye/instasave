@@ -16,7 +16,9 @@
                  [org.clojure/clojurescript "1.7.162" :classifier "aot"
                   :exclusion [org.clojure/data.json]]
                  [org.clojure/data.json "0.2.6" :classifier "aot"]
-                 [org.clojure/core.async "0.2.371"]]
+                 [org.clojure/core.async "0.2.371"]
+                 [com.cemerick/url "0.1.1"]
+                 [com.taoensso/timbre "4.1.4"]]
 
   ;; Going to experiment with multiple builds instead of module builds - might be faster...
   ;; and this will certainly be faster for background.cljs development - because we can use figwheel
